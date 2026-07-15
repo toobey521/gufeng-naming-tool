@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--V4-TEMPLATE--><title>Toobey 取名 — 古诗文提名</title>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Zhi+Mang+Xing&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;background:linear-gradient(135deg,#f0f5ff 0%,#e8f4fd 50%,#f5f0ff 100%);color:#4a5568;min-height:100vh}
+.container{max-width:900px;margin:0 auto;padding:20px}
+.header{text-align:center;padding:28px 0;margin-bottom:16px}
+.header h1{font-size:28px;color:#5b7faa;font-weight:600;letter-spacing:4px;margin-bottom:4px}
+.header p{color:#8aa3b8;font-size:13px;letter-spacing:1px}
+.lit-badge{background:rgba(91,127,170,0.1);color:#5b7faa;padding:3px 12px;border-radius:20px;font-size:12px;border:1px solid rgba(91,127,170,0.2)}
+.card{background:rgba(255,255,255,0.75);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.5);border-radius:16px;padding:24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(91,127,170,0.08)}
+.form-row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-group{display:flex;flex-direction:column}
+.form-group label{font-size:11px;color:#8aa3b8;margin-bottom:2px;letter-spacing:1px}
+.form-group input,.form-group select{background:rgba(255,255,255,0.6);border:1px solid rgba(91,127,170,0.15);border-radius:10px;padding:9px 12px;color:#4a5568;font-size:14px;outline:none;font-family:inherit;transition:border-color .3s,box-shadow .3s}
+.form-group input:focus,.form-group select:focus{border-color:#7eb8d0;box-shadow:0 0 0 3px rgba(126,184,208,0.15)}
+.btn{width:100%;padding:13px;background:linear-gradient(135deg,#7eb8d0,#a8d5e2);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:500;cursor:pointer;margin-top:12px;letter-spacing:2px;font-family:inherit;transition:all .3s;box-shadow:0 2px 8px rgba(126,184,208,0.3)}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(126,184,208,0.4)}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.loading{display:none;text-align:center;padding:30px;color:#8aa3b8}
+.loading.active{display:block}
+.spinner{width:36px;height:36px;border:3px solid rgba(126,184,208,0.2);border-top-color:#7eb8d0;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 10px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.name-card{background:linear-gradient(135deg,#f5f0e0,#efe8d0);border:1px solid rgba(180,160,120,0.3);border-radius:14px;padding:20px 16px;cursor:pointer;transition:all .3s;box-shadow:0 2px 8px rgba(140,120,80,0.08);width:100%;aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px}
+.name-card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(140,120,80,0.15);border-color:rgba(180,160,120,0.5)}
+.name-header{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
+.name-text{font-size:28px;font-weight:400;letter-spacing:6px;color:#5a4a3a;font-family:'ZCOOL XiaoWei','Ma Shan Zheng',KaiTi,STKaiti,cursive;line-height:1.3;text-shadow:0 0 8px rgba(255,255,240,0.4),0 0 4px rgba(255,255,240,0.3)}
+.score-badge{background:linear-gradient(135deg,#b8a080,#a08860);padding:3px 12px;border-radius:20px;font-size:13px;font-weight:500;color:#f5f0e0;display:inline-block}
+.name-source{font-size:11px;color:#8a7a5a;margin-top:4px;padding:3px 8px;background:rgba(140,120,80,0.12);border-radius:8px;display:inline-block;font-weight:500;text-align:center}
+#namesList{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.name-detail.open{display:block;animation:fadeIn .3s ease;grid-column:1/-1}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.poem-line{padding:10px 12px;margin:8px 0;background:linear-gradient(135deg,#1e2a3a,#2a1f3a);border-radius:10px;border-left:3px solid #a78bfa;color:#e8e0d0;font-size:13px;line-height:1.8}
+.score-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.score-item{font-size:11px;color:#c0b8a8;background:rgba(167,139,250,0.12);padding:2px 10px;border-radius:20px;font-weight:500}
+.highlight{color:#a78bfa;font-weight:600}
+.close-btn{position:absolute;top:12px;right:16px;background:none;border:none;color:#8888aa;font-size:28px;cursor:pointer;line-height:1;padding:2px 10px;border-radius:6px;transition:.2s}
+.close-btn:hover{background:rgba(255,255,255,0.1);color:#fff}
+.stat-bar{margin-top:12px;font-size:13px;color:#8aa3b8}
+.bazi-section{display:none;margin-bottom:16px;animation:fadeIn .3s ease}
+.bazi-section.active{display:block}
+.pillars{display:flex;gap:10px;margin:10px 0;flex-wrap:wrap}
+.pillar{background:rgba(126,184,208,0.08);padding:8px 14px;border-radius:10px;border:1px solid rgba(126,184,208,0.15);text-align:center}
+.pillar-name{font-size:10px;color:#8aa3b8}
+.pillar-text{font-size:18px;font-weight:600;letter-spacing:2px;color:#3d5a80}
+.wx-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;font-size:13px}
+.wx-bar{flex:1;height:6px;background:rgba(91,127,170,0.1);border-radius:3px;overflow:hidden}
+.wx-fill{height:100%;border-radius:3px}
+.wx-rec{background:rgba(126,184,208,0.08);border:1px solid rgba(126,184,208,0.2);padding:8px 14px;border-radius:10px;margin-top:10px;font-size:13px;color:#5b7faa}
+@media(max-width:600px){#namesList{grid-template-columns:repeat(2,1fr)}.form-row{grid-template-columns:1fr 1fr}.name-text{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+    <h1 style="font-size:34px;letter-spacing:6px;margin-bottom:8px"><span style="font-family:'Ma Shan Zheng','ZCOOL KuaiLe',KaiTi,cursive;color:#8b1a1a;font-weight:400">古风取名</span><span style="color:#7eb8d0;font-size:18px;font-family:'PingFang SC',sans-serif;font-weight:300;letter-spacing:2px">-Toobey</span></h1>
+        <p>古韵典籍· 八字五行 · 六大维度 · 精选好名<span id="litCount" style="display:none">${res.lit_db_size||0}篇</span></p>
+</div>
+
+<div class="card">
+    <div class="form-row">
+        <div class="form-group"><label>姓氏</label><input type="text" id="surname" placeholder="张" maxlength="2"></div>
+        <div class="form-group"><label>性别</label><select id="gender"><option value="male">男孩</option><option value="female">女孩</option></select></div>
+        <div class="form-group"><label>时辰</label><select id="hour"><option value="">未知</option><option value="23">子时(23-01)</option><option value="1">丑时(01-03)</option><option value="3">寅时(03-05)</option><option value="5">卯时(05-07)</option><option value="7">辰时(07-09)</option><option value="9">巳时(09-11)</option><option value="11" selected>午时(11-13)</option><option value="13">未时(13-15)</option><option value="15">申时(15-17)</option><option value="17">酉时(17-19)</option><option value="19">戌时(19-21)</option><option value="21">亥时(21-23)</option></select></div>
+        <div class="form-group"><label>数量</label><select id="count"><option value="10">10个</option><option value="20" selected>20个</option><option value="30">30个</option></select></div>
+    </div>
+    <div class="form-row-2">
+        <div class="form-group"><label>出生年份</label><select id="year"></select></div>
+        <div class="form-row" style="grid-template-columns:1fr 1fr;gap:10px;margin:0">
+            <div class="form-group"><label>月</label><select id="month"></select></div>
+            <div class="form-group"><label>日</label><select id="day"></select></div>
+        </div>
+    </div>
+    <button class="btn" id="btnGen" onclick="generate()">📜 开始取名</button>
+</div>
+
+<div class="loading" id="loading"><div class="spinner"></div>翻阅古籍，为您选名...</div>
+<div class="bazi-section" id="baziSection"></div>
+<div id="namesList"></div>
+</div>
+
+<script>
+// 日期初始化
+(function(){
+    const y=document.getElementById('year');
+    for(let yy=2099;yy>=1970;yy--){const o=document.createElement('option');o.value=yy;o.textContent=yy+'年';if(yy===2026)o.selected=true;y.appendChild(o)}
+    const m=document.getElementById('month');
+    for(let mm=1;mm<=12;mm++){const o=document.createElement('option');o.value=mm;o.textContent=mm+'月';if(mm===7)m.selectedIndex=mm-1;m.appendChild(o)}
+    updateDays();
+    document.getElementById('month').onchange=updateDays;
+    document.getElementById('year').onchange=updateDays;
+})();
+function updateDays(){
+    const y=+document.getElementById('year').value,m=+document.getElementById('month').value;
+    const d=document.getElementById('day'),days=new Date(y,m,0).getDate();
+    d.innerHTML='';
+    for(let dd=1;dd<=days;dd++){const o=document.createElement('option');o.value=dd;o.textContent=dd+'日';if(dd===15)o.selected=true;d.appendChild(o)}
+}
+function generate(){
+    const s=document.getElementById('surname').value.trim();
+    if(!s){alert('请填写姓氏');return}
+    document.getElementById('btnGen').disabled=true;document.getElementById('btnGen').textContent='⏳ 翻阅古籍中...';
+    document.getElementById('loading').classList.add('active');
+    document.getElementById('baziSection').classList.remove('active');
+    document.getElementById('namesList').innerHTML='';
+    
+    fetch('/generate',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+            surname:s,gender:document.getElementById('gender').value,
+            year:+document.getElementById('year').value,
+            month:+document.getElementById('month').value,
+            day:+document.getElementById('day').value,
+            hour:+document.getElementById('hour').value||12,
+            count:+document.getElementById('count').value
+        })
+    }).then(r=>r.json()).then(res=>{
+        document.getElementById('btnGen').disabled=false;document.getElementById('btnGen').textContent='📜 开始取名';
+        document.getElementById('loading').classList.remove('active');
+        if(!res.success){alert(res.error||'失败');return}
+        
+        document.getElementById('litCount').textContent=`${res.lit_db_size||0}篇`;
+        
+        // 八字
+        const b=res.bazi,wx={'木':'#10b981','火':'#f59e0b','土':'#a78bfa','金':'#f472b6','水':'#3b82f6'},we={'木':'🌲','火':'🔥','土':'🏔️','金':'⚔️','水':'💧'};
+        const mx=Math.max(...Object.values(b.wuxing_counts),1);
+        let ph='';b.pillars.forEach(p=>{ph+=`<div class="pillar"><div class="pillar-name">${p.name}</div><div class="pillar-text">${p.text}</div></div>`});
+        let wh='';
+        ['木','火','土','金','水'].forEach(w=>{
+            const v=b.wuxing_counts[w]||0,pct=(v/mx*100).toFixed(0);
+            wh+=`<div class="wx-row"><span>${we[w]||''}</span><div class="wx-bar"><div class="wx-fill" style="width:${pct}%;background:${wx[w]}"></div></div><span>${v}</span></div>`;
+        });
+        document.getElementById('baziSection').innerHTML=`
+            <div class="card"><div style="font-size:15px;font-weight:600;margin-bottom:10px">☯️ 八字参考</div>
+            <div style="font-size:12px;color:#888">${b.birth_date} · ${b.gender} · 生肖${b.zodiac} · 八字${b.bazi_str} · 日主${b.ri_zhu}(${b.ri_zhu_wx})</div>
+            <div class="pillars">${ph}</div>${wh}
+            <div class="wx-rec">💡 ${b.recommend_text}</div></div>`;
+        document.getElementById('baziSection').classList.add('active');
+        
+        // 名字
+        const list=document.getElementById('namesList');list.innerHTML='';var card_idx=0;
+        res.names.forEach(n=>{
+            const phr=n.phrase_analysis||[];
+            const card=document.createElement('div');card.className='name-card';
+            card.onclick=function(){if(this.dataset.detail)openModal(this.dataset.name,this.dataset.detail)};card_idx++;
+            const sourcesData = phr.map(p=>({title:p.title,source:p.source,snippet:p.snippet||''}));
+            let sourceHtml='';
+            if(sourcesData.length>0){
+                sourceHtml=`<div class="name-source">📜 出自「${sourcesData[0].title}」${sourcesData[0].source}</div>`;
+            }
+            
+            let detailHtml='';
+            if(sourcesData.length>0){
+                detailHtml+='<div style="margin-bottom:10px"><div style="font-weight:600;margin-bottom:6px;color:#a78bfa">📜 诗文出处与释义</div>';
+                sourcesData.forEach((p,idx)=>{
+                    const uid='fp_'+(Math.random()+Date.now()).toString(36).slice(2,10)+'_'+idx;
+                    detailHtml+=`<div class="poem-line" style="margin-bottom:8px;padding:10px">
+                        <div style="font-weight:600;color:#a78bfa;font-size:14px">「${p.title}」${p.source}</div>
+                        <div style="margin:6px 0;color:#a78bfa;font-style:italic;padding:6px;background:rgba(0,0,0,0.15);border-radius:6px">${p.snippet}</div>
+                        <div style="color:#8888aa;font-size:12px;margin-bottom:4px">📖 全诗：</div>
+                        <div id="${uid}" data-title="${p.title}" data-snippet="${p.snippet||''}" style="color:#e8e8f0;font-size:13px;line-height:2;padding:6px;background:rgba(0,0,0,0.1);border-radius:6px;max-height:200px;overflow-y:auto">加载中...</div>
+                        <div id="ex_${uid}" style="margin-top:6px;padding:6px;background:rgba(16,185,129,0.1);border-left:3px solid #10b981;border-radius:4px;color:#10b981;font-size:12px">💡 加载释义中...</div>
+                    </div>`;
+                    // 存标题到data属性，弹窗时触发加载
+                    // 加载标记：id以fp_开头的内容会在openModal时自动拉取全诗
+                });
+                detailHtml+='</div>';
+            }
+                        // 多维分析（前端内置字库，不依赖后端char_info）
+            const _CDB = {"世":["shi",4,"金",5,"世字属金，坚毅/贵重"],"丝":["si",1,"金",5,"丝字属金，坚毅/贵重"],"丞":["cheng",2,"金",6,"丞字属金，坚毅/贵重"],"丹":["dan",1,"火",4,"丹字属火，光明/热情"],"予":["yu",3,"土",4,"予字属土，稳重/包容"],"云":["yun",2,"水",4,"云字属水，智慧/灵动"],"亦":["yi",4,"土",6,"亦字属土，稳重/包容"],"亭":["ting",2,"火",9,"亭字属火，光明/热情"],"亮":["liang",4,"火",9,"亮字属火，光明/热情"],"仕":["shi",4,"金",5,"仕字属金，坚毅/贵重"],"任":["ren",4,"金",6,"任字属金，坚毅/贵重"],"伊":["yi",1,"土",6,"伊字属土，稳重/包容"],"依":["yi",1,"土",8,"依字属土，稳重/包容"],"俐":["li",4,"火",9,"俐字属火，光明/热情"],"倩":["qian",4,"金",10,"倩字属金，坚毅/贵重"],"允":["yun",3,"土",4,"允字属土，稳重/包容"],"先":["xian",1,"金",6,"先字属金，坚毅/贵重"],"光":["guang",1,"火",6,"光字属火，光明/热情"],"兮":["xi",1,"金",4,"兮字属金，坚毅/贵重"],"兹":["zi",1,"金",9,"兹字属金，坚毅/贵重"],"冉":["ran",3,"火",5,"冉字属火，光明/热情"],"册":["ce",4,"金",5,"册字属金，坚毅/贵重"],"冰":["bing",1,"水",6,"冰字属水，智慧/灵动"],"凝":["ning",2,"水",16,"凝字属水，智慧/灵动"],"凡":["fan",2,"木",3,"凡字属木，生机/自然"],"则":["ze",2,"金",6,"则字属金，坚毅/贵重"],"刚":["gang",1,"金",6,"刚字属金，坚毅/贵重"],"初":["chu",1,"金",7,"初字属金，坚毅/贵重"],"劭":["shao",4,"金",7,"劭字属金，坚毅/贵重"],"千":["qian",1,"金",3,"千字属金，坚毅/贵重"],"卉":["hui",4,"木",5,"卉字属木，生机/自然"],"参":["can",1,"金",8,"参字属金，坚毅/贵重"],"叙":["xu",4,"金",9,"叙字属金，坚毅/贵重"],"可":["ke",3,"木",5,"可字属木，生机/自然"],"司":["si",1,"金",5,"司字属金，坚毅/贵重"],"君":["jun",1,"木",7,"君字属木，生机/自然"],"咨":["zi",1,"金",9,"咨字属金，坚毅/贵重"],"哲":["zhe",2,"火",10,"哲字属火，光明/热情"],"商":["shang",1,"金",11,"商字属金，坚毅/贵重"],"善":["shan",4,"金",12,"善字属金，坚毅/贵重"],"喻":["yu",4,"金",12,"喻字属金，坚毅/贵重"],"园":["yuan",2,"土",7,"园字属土，稳重/包容"],"圣":["sheng",4,"土",5,"圣字属土，稳重/包容"],"均":["jun",1,"土",7,"均字属土，稳重/包容"],"坤":["kun",1,"土",8,"坤字属土，稳重/包容"],"垆":["lu",2,"土",7,"垆字属土，稳重/包容"],"城":["cheng",2,"土",9,"城字属土，稳重/包容"],"域":["yu",4,"土",11,"域字属土，稳重/包容"],"培":["pei",2,"土",11,"培字属土，稳重/包容"],"基":["ji",1,"土",11,"基字属土，稳重/包容"],"堂":["tang",2,"土",11,"堂字属土，稳重/包容"],"堪":["kan",1,"土",12,"堪字属土，稳重/包容"],"墨":["mo",4,"水",15,"墨字属水，智慧/灵动"],"壹":["yi",1,"土",12,"壹字属土，稳重/包容"],"奕":["yi",4,"火",9,"奕字属火，光明/热情"],"妙":["miao",4,"金",7,"妙字属金，坚毅/贵重"],"姒":["si",4,"金",7,"姒字属金，坚毅/贵重"],"姗":["shan",1,"金",8,"姗字属金，坚毅/贵重"],"姝":["shu",1,"金",9,"姝字属金，坚毅/贵重"],"姿":["zi",1,"金",9,"姿字属金，坚毅/贵重"],"娅":["ya",4,"土",9,"娅字属土，稳重/包容"],"娜":["na",4,"火",9,"娜字属火，光明/热情"],"娴":["xian",2,"土",10,"娴字属土，稳重/包容"],"婉":["wan",3,"土",11,"婉字属土，稳重/包容"],"婵":["chan",2,"金",11,"婵字属金，坚毅/贵重"],"媜":["zheng",1,"金",13,"媜字属金，坚毅/贵重"],"嫣":["yan",1,"土",14,"嫣字属土，稳重/包容"],"存":["cun",2,"金",6,"存字属金，坚毅/贵重"],"宁":["ning",2,"火",5,"宁字属火，光明/热情"],"宇":["yu",3,"土",6,"宇字属土，稳重/包容"],"安":["an",1,"土",6,"安字属土，稳重/包容"],"宏":["hong",2,"水",7,"宏字属水，智慧/灵动"],"宛":["wan",3,"土",8,"宛字属土，稳重/包容"],"宸":["chen",2,"金",10,"宸字属金，坚毅/贵重"],"容":["rong",2,"土",10,"容字属土，稳重/包容"],"寒":["han",2,"水",12,"寒字属水，智慧/灵动"],"尉":["wei",4,"土",11,"尉字属土，稳重/包容"],"屹":["yi",4,"土",6,"屹字属土，稳重/包容"],"屿":["yu",3,"土",6,"屿字属土，稳重/包容"],"岚":["lan",2,"土",7,"岚字属土，稳重/包容"],"岩":["yan",2,"土",8,"岩字属土，稳重/包容"],"峙":["zhi",4,"金",9,"峙字属金，坚毅/贵重"],"峥":["zheng",1,"土",9,"峥字属土，稳重/包容"],"峻":["jun",4,"金",10,"峻字属金，坚毅/贵重"],"崇":["chong",2,"金",11,"崇字属金，坚毅/贵重"],"崧":["song",1,"木",11,"崧字属木，生机/自然"],"嵩":["song",1,"金",13,"嵩字属金，坚毅/贵重"],"巍":["wei",1,"土",21,"巍字属土，稳重/包容"],"川":["chuan",1,"金",3,"川字属金，坚毅/贵重"],"帅":["shuai",4,"金",5,"帅字属金，坚毅/贵重"],"帆":["fan",1,"水",6,"帆字属水，智慧/灵动"],"师":["shi",1,"金",6,"师字属金，坚毅/贵重"],"帧":["zhen",1,"金",9,"帧字属金，坚毅/贵重"],"常":["chang",2,"金",11,"常字属金，坚毅/贵重"],"平":["ping",2,"水",5,"平字属水，智慧/灵动"],"序":["xu",4,"金",7,"序字属金，坚毅/贵重"],"廷":["ting",2,"火",6,"廷字属火，光明/热情"],"弈":["yi",4,"木",9,"弈字属木，生机/自然"],"彤":["tong",2,"火",7,"彤字属火，光明/热情"],"彦":["yan",4,"木",9,"彦字属木，生机/自然"],"彩":["cai",3,"金",11,"彩字属金，坚毅/贵重"],"彬":["bin",1,"木",11,"彬字属木，生机/自然"],"彰":["zhang",1,"火",14,"彰字属火，光明/热情"],"律":["lv",4,"金",9,"律字属金，坚毅/贵重"],"志":["zhi",4,"火",7,"志字属火，光明/热情"],"怜":["lian",2,"金",8,"怜字属金，坚毅/贵重"],"思":["si",1,"金",9,"思字属金，坚毅/贵重"],"怡":["yi",2,"土",8,"怡字属土，稳重/包容"],"恕":["shu",4,"金",10,"恕字属金，坚毅/贵重"],"恪":["ke",4,"金",9,"恪字属金，坚毅/贵重"],"恬":["tian",2,"火",9,"恬字属火，光明/热情"],"恺":["kai",3,"火",10,"恺字属火，光明/热情"],"惜":["xi",1,"金",11,"惜字属金，坚毅/贵重"],"慈":["ci",2,"金",13,"慈字属金，坚毅/贵重"],"慎":["shen",4,"金",13,"慎字属金，坚毅/贵重"],"懿":["yi",4,"土",22,"懿字属土，稳重/包容"],"承":["cheng",2,"金",8,"承字属金，坚毅/贵重"],"攸":["you",1,"土",7,"攸字属土，稳重/包容"],"敖":["ao",2,"土",10,"敖字属土，稳重/包容"],"文":["wen",2,"水",4,"文字属水，智慧/灵动"],"斯":["si",1,"金",12,"斯字属金，坚毅/贵重"],"旋":["xuan",2,"金",11,"旋字属金，坚毅/贵重"],"日":["ri",4,"火",4,"日字属火，光明/热情"],"旭":["xu",4,"火",6,"旭字属火，光明/热情"],"昀":["yun",2,"火",8,"昀字属火，光明/热情"],"昌":["chang",1,"金",8,"昌字属金，坚毅/贵重"],"昕":["xin",1,"火",8,"昕字属火，光明/热情"],"昭":["zhao",1,"火",9,"昭字属火，光明/热情"],"昱":["yu",4,"火",9,"昱字属火，光明/热情"],"晁":["chao",2,"火",10,"晁字属火，光明/热情"],"晓":["xiao",3,"火",10,"晓字属火，光明/热情"],"晔":["ye",4,"火",10,"晔字属火，光明/热情"],"晗":["han",2,"火",11,"晗字属火，光明/热情"],"晚":["wan",3,"金",11,"晚字属金，坚毅/贵重"],"晞":["xi",1,"火",11,"晞字属火，光明/热情"],"晟":["cheng",2,"火",10,"晟字属火，光明/热情"],"晨":["chen",2,"火",11,"晨字属火，光明/热情"],"晴":["qing",2,"火",12,"晴字属火，光明/热情"],"曜":["yao",4,"火",16,"曜字属火，光明/热情"],"曦":["xi",1,"火",20,"曦字属火，光明/热情"],"望":["wang",4,"金",11,"望字属金，坚毅/贵重"],"本":["ben",3,"木",5,"本字属木，生机/自然"],"朵":["duo",3,"木",6,"朵字属木，生机/自然"],"权":["quan",2,"木",6,"权字属木，生机/自然"],"杉":["shan",1,"木",7,"杉字属木，生机/自然"],"杏":["xing",4,"木",7,"杏字属木，生机/自然"],"松":["song",1,"木",8,"松字属木，生机/自然"],"林":["lin",2,"木",8,"林字属木，生机/自然"],"柏":["bai",3,"木",9,"柏字属木，生机/自然"],"柔":["rou",2,"金",9,"柔字属金，坚毅/贵重"],"柯":["ke",1,"木",9,"柯字属木，生机/自然"],"柳":["liu",3,"木",9,"柳字属木，生机/自然"],"栋":["dong",4,"木",9,"栋字属木，生机/自然"],"树":["shu",4,"木",9,"树字属木，生机/自然"],"栖":["qi",1,"木",10,"栖字属木，生机/自然"],"栩":["xu",3,"木",10,"栩字属木，生机/自然"],"桁":["heng",2,"木",10,"桁字属木，生机/自然"],"桃":["tao",2,"木",10,"桃字属木，生机/自然"],"桐":["tong",2,"木",10,"桐字属木，生机/自然"],"桓":["huan",2,"木",10,"桓字属木，生机/自然"],"桢":["zhen",1,"木",10,"桢字属木，生机/自然"],"桦":["hua",4,"木",10,"桦字属木，生机/自然"],"梅":["mei",2,"木",11,"梅字属木，生机/自然"],"梧":["wu",2,"木",11,"梧字属木，生机/自然"],"梨":["li",2,"木",11,"梨字属木，生机/自然"],"梵":["fan",4,"木",11,"梵字属木，生机/自然"],"棋":["qi",2,"木",12,"棋字属木，生机/自然"],"棠":["tang",2,"木",12,"棠字属木，生机/自然"],"棣":["di",4,"木",12,"棣字属木，生机/自然"],"森":["sen",1,"木",12,"森字属木，生机/自然"],"楚":["chu",3,"金",13,"楚字属金，坚毅/贵重"],"楠":["nan",2,"木",13,"楠字属木，生机/自然"],"楷":["kai",3,"木",13,"楷字属木，生机/自然"],"槐":["huai",2,"木",13,"槐字属木，生机/自然"],"槿":["jin",3,"木",15,"槿字属木，生机/自然"],"樾":["yue",4,"木",15,"樾字属木，生机/自然"],"檐":["yan",2,"木",17,"檐字属木，生机/自然"],"歆":["xin",1,"金",13,"歆字属金，坚毅/贵重"],"毅":["yi",4,"金",15,"毅字属金，坚毅/贵重"],"永":["yong",3,"土",5,"永字属土，稳重/包容"],"汐":["xi",1,"水",6,"汐字属水，智慧/灵动"],"江":["jiang",1,"水",6,"江字属水，智慧/灵动"],"沄":["yun",2,"水",7,"沄字属水，智慧/灵动"],"沐":["mu",4,"水",7,"沐字属水，智慧/灵动"],"沛":["pei",4,"水",7,"沛字属水，智慧/灵动"],"沣":["feng",1,"水",7,"沣字属水，智慧/灵动"],"沫":["mo",4,"水",8,"沫字属水，智慧/灵动"],"泉":["quan",2,"水",9,"泉字属水，智慧/灵动"],"泊":["po",1,"水",8,"泊字属水，智慧/灵动"],"泓":["hong",2,"水",8,"泓字属水，智慧/灵动"],"泠":["ling",2,"水",8,"泠字属水，智慧/灵动"],"泽":["ze",2,"水",8,"泽字属水，智慧/灵动"],"洋":["yang",2,"水",9,"洋字属水，智慧/灵动"],"洛":["luo",4,"水",9,"洛字属水，智慧/灵动"],"津":["jin",1,"水",9,"津字属水，智慧/灵动"],"洲":["zhou",1,"水",9,"洲字属水，智慧/灵动"],"洵":["xun",2,"水",9,"洵字属水，智慧/灵动"],"济":["ji",4,"水",9,"济字属水，智慧/灵动"],"浔":["xun",2,"水",9,"浔字属水，智慧/灵动"],"浦":["pu",3,"水",10,"浦字属水，智慧/灵动"],"浩":["hao",4,"水",10,"浩字属水，智慧/灵动"],"润":["run",4,"水",10,"润字属水，智慧/灵动"],"淇":["qi",2,"水",11,"淇字属水，智慧/灵动"],"淮":["huai",2,"水",11,"淮字属水，智慧/灵动"],"淳":["chun",2,"水",11,"淳字属水，智慧/灵动"],"清":["qing",1,"木",11,"清字属木，生机/自然"],"渊":["yuan",1,"水",11,"渊字属水，智慧/灵动"],"渤":["bo",2,"水",12,"渤字属水，智慧/灵动"],"渺":["miao",3,"水",12,"渺字属水，智慧/灵动"],"湄":["mei",2,"水",12,"湄字属水，智慧/灵动"],"湘":["xiang",1,"水",12,"湘字属水，智慧/灵动"],"湛":["zhan",4,"水",12,"湛字属水，智慧/灵动"],"源":["yuan",2,"水",13,"源字属水，智慧/灵动"],"溥":["pu",3,"水",13,"溥字属水，智慧/灵动"],"滢":["ying",2,"水",14,"滢字属水，智慧/灵动"],"滨":["bin",1,"水",17,"滨字属水，智慧/灵动"],"漪":["yi",1,"水",14,"漪字属水，智慧/灵动"],"漫":["man",4,"水",14,"漫字属水，智慧/灵动"],"潇":["xiao",1,"水",14,"潇字属水，智慧/灵动"],"澄":["cheng",2,"水",15,"澄字属水，智慧/灵动"],"澜":["lan",2,"水",15,"澜字属水，智慧/灵动"],"濠":["hao",2,"水",17,"濠字属水，智慧/灵动"],"瀚":["han",4,"水",19,"瀚字属水，智慧/灵动"],"灵":["ling",2,"火",7,"灵字属火，光明/热情"],"灿":["can",4,"火",7,"灿字属火，光明/热情"],"炅":["jiong",3,"火",8,"炅字属火，光明/热情"],"烨":["ye",4,"火",11,"烨字属火，光明/热情"],"焉":["yan",1,"土",11,"焉字属土，稳重/包容"],"煊":["xuan",1,"火",13,"煊字属火，光明/热情"],"煜":["yu",4,"火",13,"煜字属火，光明/热情"],"熙":["xi",1,"金",14,"熙字属金，坚毅/贵重"],"燕":["yan",4,"土",16,"燕字属土，稳重/包容"],"玄":["xuan",2,"水",5,"玄字属水，智慧/灵动"],"玲":["ling",2,"火",9,"玲字属火，光明/热情"],"珊":["shan",1,"金",9,"珊字属金，坚毅/贵重"],"珍":["zhen",1,"火",9,"珍字属火，光明/热情"],"珑":["long",2,"火",9,"珑字属火，光明/热情"],"珠":["zhu",1,"金",10,"珠字属金，坚毅/贵重"],"琛":["chen",1,"金",12,"琛字属金，坚毅/贵重"],"琬":["wan",3,"土",12,"琬字属土，稳重/包容"],"琮":["cong",2,"金",12,"琮字属金，坚毅/贵重"],"琻":["jin",1,"金",12,"琻字属金，坚毅/贵重"],"瑜":["yu",2,"金",13,"瑜字属金，坚毅/贵重"],"瑞":["rui",4,"金",13,"瑞字属金，坚毅/贵重"],"瑶":["yao",2,"火",14,"瑶字属火，光明/热情"],"璨":["can",4,"金",17,"璨字属金，坚毅/贵重"],"畅":["chang",4,"火",8,"畅字属火，光明/热情"],"白":["bai",2,"水",5,"白字属水，智慧/灵动"],"皋":["gao",1,"木",10,"皋字属木，生机/自然"],"盛":["sheng",4,"金",11,"盛字属金，坚毅/贵重"],"祚":["zuo",4,"金",9,"祚字属金，坚毅/贵重"],"祜":["hu",4,"金",9,"祜字属金，坚毅/贵重"],"祯":["zhen",1,"火",10,"祯字属火，光明/热情"],"禧":["xi",3,"金",17,"禧字属金，坚毅/贵重"],"禾":["he",2,"木",5,"禾字属木，生机/自然"],"穆":["mu",4,"金",16,"穆字属金，坚毅/贵重"],"笈":["ji",2,"木",10,"笈字属木，生机/自然"],"笙":["sheng",1,"木",11,"笙字属木，生机/自然"],"笛":["di",2,"木",11,"笛字属木，生机/自然"],"笺":["jian",1,"木",11,"笺字属木，生机/自然"],"策":["ce",4,"金",12,"策字属金，坚毅/贵重"],"简":["jian",3,"木",13,"简字属木，生机/自然"],"箐":["qing",4,"木",11,"箐字属木，生机/自然"],"箫":["xiao",1,"木",14,"箫字属木，生机/自然"],"素":["su",4,"金",10,"素字属金，坚毅/贵重"],"紫":["zi",3,"金",12,"紫字属金，坚毅/贵重"],"絮":["xu",4,"木",12,"絮字属木，生机/自然"],"纯":["chun",2,"金",7,"纯字属金，坚毅/贵重"],"纾":["shu",1,"金",7,"纾字属金，坚毅/贵重"],"绾":["wan",3,"金",11,"绾字属金，坚毅/贵重"],"肃":["su",4,"金",8,"肃字属金，坚毅/贵重"],"腾":["teng",2,"火",13,"腾字属火，光明/热情"],"臣":["chen",2,"金",6,"臣字属金，坚毅/贵重"],"舒":["shu",1,"金",12,"舒字属金，坚毅/贵重"],"航":["hang",2,"水",10,"航字属水，智慧/灵动"],"艺":["yi",4,"木",4,"艺字属木，生机/自然"],"芍":["shao",2,"木",6,"芍字属木，生机/自然"],"芝":["zhi",1,"木",6,"芝字属木，生机/自然"],"芬":["fen",1,"木",7,"芬字属木，生机/自然"],"花":["hua",1,"木",7,"花字属木，生机/自然"],"芳":["fang",1,"木",7,"芳字属木，生机/自然"],"芷":["zhi",3,"木",7,"芷字属木，生机/自然"],"芸":["yun",2,"木",7,"芸字属木，生机/自然"],"芹":["qin",2,"木",7,"芹字属木，生机/自然"],"苑":["yuan",4,"木",8,"苑字属木，生机/自然"],"苒":["ran",3,"木",8,"苒字属木，生机/自然"],"苓":["ling",2,"木",8,"苓字属木，生机/自然"],"苔":["tai",2,"木",8,"苔字属木，生机/自然"],"苗":["miao",2,"木",8,"苗字属木，生机/自然"],"若":["ruo",4,"木",8,"若字属木，生机/自然"],"英":["ying",1,"木",8,"英字属木，生机/自然"],"茂":["mao",4,"木",8,"茂字属木，生机/自然"],"茉":["mo",4,"木",8,"茉字属木，生机/自然"],"茗":["ming",2,"木",9,"茗字属木，生机/自然"],"茜":["qian",4,"木",9,"茜字属木，生机/自然"],"茵":["yin",1,"木",9,"茵字属木，生机/自然"],"荀":["xun",2,"木",9,"荀字属木，生机/自然"],"荃":["quan",2,"木",9,"荃字属木，生机/自然"],"荞":["qiao",2,"木",9,"荞字属木，生机/自然"],"荣":["rong",2,"木",9,"荣字属木，生机/自然"],"莞":["guan",3,"木",10,"莞字属木，生机/自然"],"菀":["wan",3,"木",11,"菀字属木，生机/自然"],"菁":["jing",1,"木",11,"菁字属木，生机/自然"],"菡":["han",4,"木",11,"菡字属木，生机/自然"],"菲":["fei",1,"木",11,"菲字属木，生机/自然"],"萋":["qi",1,"木",11,"萋字属木，生机/自然"],"萌":["meng",2,"木",11,"萌字属木，生机/自然"],"萍":["ping",2,"木",11,"萍字属木，生机/自然"],"萱":["xuan",1,"木",12,"萱字属木，生机/自然"],"葵":["kui",2,"木",12,"葵字属木，生机/自然"],"蓉":["rong",2,"木",13,"蓉字属木，生机/自然"],"蔓":["man",4,"木",14,"蔓字属木，生机/自然"],"蔺":["lin",4,"木",14,"蔺字属木，生机/自然"],"蕊":["rui",3,"木",15,"蕊字属木，生机/自然"],"薇":["wei",1,"木",16,"薇字属木，生机/自然"],"虔":["qian",2,"金",10,"虔字属金，坚毅/贵重"],"虞":["yu",2,"金",13,"虞字属金，坚毅/贵重"],"蝶":["die",2,"火",15,"蝶字属火，光明/热情"],"融":["rong",2,"土",16,"融字属土，稳重/包容"],"西":["xi",1,"金",6,"西字属金，坚毅/贵重"],"词":["ci",2,"金",7,"词字属金，坚毅/贵重"],"译":["yi",4,"金",7,"译字属金，坚毅/贵重"],"诗":["shi",1,"金",8,"诗字属金，坚毅/贵重"],"诚":["cheng",2,"金",8,"诚字属金，坚毅/贵重"],"谷":["gu",3,"木",7,"谷字属木，生机/自然"],"赓":["geng",1,"金",12,"赓字属金，坚毅/贵重"],"超":["chao",1,"金",12,"超字属金，坚毅/贵重"],"辛":["xin",1,"金",7,"辛字属金，坚毅/贵重"],"辰":["chen",2,"土",7,"辰字属土，稳重/包容"],"远":["yuan",3,"土",7,"远字属土，稳重/包容"],"迟":["chi",2,"金",7,"迟字属金，坚毅/贵重"],"邦":["bang",1,"金",6,"邦字属金，坚毅/贵重"],"邺":["ye",4,"金",7,"邺字属金，坚毅/贵重"],"鉴":["jian",4,"金",13,"鉴字属金，坚毅/贵重"],"钊":["zhao",1,"金",7,"钊字属金，坚毅/贵重"],"钏":["chuan",4,"金",8,"钏字属金，坚毅/贵重"],"钗":["chai",1,"金",8,"钗字属金，坚毅/贵重"],"钥":["yao",4,"金",9,"钥字属金，坚毅/贵重"],"钦":["qin",1,"金",9,"钦字属金，坚毅/贵重"],"钧":["jun",1,"金",9,"钧字属金，坚毅/贵重"],"钰":["yu",4,"金",10,"钰字属金，坚毅/贵重"],"钲":["zheng",1,"金",10,"钲字属金，坚毅/贵重"],"钿":["dian",4,"金",10,"钿字属金，坚毅/贵重"],"铂":["bo",2,"金",10,"铂字属金，坚毅/贵重"],"铃":["ling",2,"金",10,"铃字属金，坚毅/贵重"],"铄":["shuo",4,"金",10,"铄字属金，坚毅/贵重"],"铠":["kai",3,"金",11,"铠字属金，坚毅/贵重"],"铭":["ming",2,"金",11,"铭字属金，坚毅/贵重"],"铮":["zheng",1,"金",11,"铮字属金，坚毅/贵重"],"锋":["feng",1,"金",12,"锋字属金，坚毅/贵重"],"锦":["jin",3,"金",13,"锦字属金，坚毅/贵重"],"镇":["zhen",4,"金",15,"镇字属金，坚毅/贵重"],"雨":["yu",3,"水",8,"雨字属水，智慧/灵动"],"雪":["xue",3,"水",11,"雪字属水，智慧/灵动"],"雯":["wen",2,"水",12,"雯字属水，智慧/灵动"],"霂":["mu",4,"水",15,"霂字属水，智慧/灵动"],"霄":["xiao",1,"水",15,"霄字属水，智慧/灵动"],"霏":["fei",1,"水",16,"霏字属水，智慧/灵动"],"霓":["ni",2,"水",16,"霓字属水，智慧/灵动"],"霖":["lin",2,"水",16,"霖字属水，智慧/灵动"],"霜":["shuang",1,"水",17,"霜字属水，智慧/灵动"],"霞":["xia",2,"水",17,"霞字属水，智慧/灵动"],"露":["lu",4,"水",21,"露字属水，智慧/灵动"],"韬":["tao",1,"火",14,"韬字属火，光明/热情"],"韵":["yun",4,"土",13,"韵字属土，稳重/包容"],"韶":["shao",2,"金",14,"韶字属金，坚毅/贵重"],"颐":["yi",2,"土",13,"颐字属土，稳重/包容"],"鸿":["hong",2,"水",11,"鸿字属水，智慧/灵动"]}
+            const _tnMap = {1:'阴平',2:'阳平',3:'上声',4:'去声'};
+            const _charsArr = n.given_chars || [];
+            if(_charsArr.length>=2){
+                // 音律分析（带拼音）
+                const _pyStr = _charsArr.map(ch=>{const d=_CDB[ch];return ch+'('+(d?d[0]:ch)+' '+_tnMap[d?d[1]:1]+')'}).join(' ');
+                detailHtml+=`<div style="margin:10px 0;padding:12px;background:#1e2a3a;border-radius:8px">
+                    <div style="font-weight:600;margin-bottom:6px;color:#a78bfa">🔊 音律分析</div>
+                    <div style="font-size:13px;color:#b8b8d0;line-height:1.8">   声调：${_pyStr}，朗朗上口</div></div>`;
+                
+                // 字义与寓意分析
+                let _ml='';
+                _charsArr.forEach(ch=>{const d=_CDB[ch];if(d)_ml+='「'+ch+'」五行属'+d[2]+'，笔画'+d[3]+'画，'+d[4]+'<br>'});
+                detailHtml+=`<div style="margin:10px 0;padding:12px;background:#2a1f3a;border-radius:8px">
+                    <div style="font-weight:600;margin-bottom:6px;color:#a78bfa">📖 字义与寓意分析</div>
+                    <div style="font-size:13px;color:#b8b8d0;line-height:1.8">${_ml}</div></div>`;
+                
+                // 字形分析
+                const _totalSt = _charsArr.reduce((s,ch)=>s+(_CDB[ch]?Number(_CDB[ch][3]):0),0);
+                const _stStr = _charsArr.map(ch=>{const d=_CDB[ch];return ch+'('+(d?d[3]:'?')+'画)'}).join(' ');
+                detailHtml+=`<div style="margin:10px 0;padding:12px;background:#1a2e2a;border-radius:8px">
+                    <div style="font-weight:600;margin-bottom:6px;color:#a78bfa">✍️ 字形分析</div>
+                    <div style="font-size:13px;color:#b8b8d0;line-height:1.8">   笔画：${_stStr} 共${_totalSt}画</div></div>`;
+                
+                // 综合评分
+                const _dims=[['☯️五行命理',n.bazi_score||0,35],['📜诗文出处',n.lit_score||0,20],['🔊音律读音',n.tone_score||0,20],['📖字义内涵',n.meaning_score||0,20],['✍️字形书写',n.stroke_score||0,15]];
+                let _bars='';
+                _dims.forEach(d=>{const bl=Math.floor(d[1]/d[2]*10);_bars+=d[0]+'：'+'█'.repeat(bl)+'░'.repeat(10-bl)+' '+d[1]+'/'+d[2]+'<br>'});
+                const _lvl=n.total_score>=85?'🌟 绝佳好名':n.total_score>=75?'👍 上乘之名':'✅ 不错';
+                detailHtml+=`<div style="margin:10px 0;padding:12px;background:#2a2a1e;border-radius:8px">
+                    <div style="font-weight:600;margin-bottom:6px;color:#a78bfa">📊 综合评分 ${n.total_score} ${_lvl}</div>
+                    <div style="font-size:13px;color:#b8b8d0;line-height:1.8">${_bars}</div></div>`;
+            }            detailHtml+=`<div class="score-row">
+                <span class="score-item ${n.bazi_score>=25?'highlight':''}">☯️五行 ${n.bazi_score}/35</span>
+                <span class="score-item ${n.lit_score>=14?'highlight':''}">📜诗文 ${n.lit_score}/20</span>
+                <span class="score-item">🔊音律 ${n.tone_score}/20</span>
+                <span class="score-item">📖字义 ${n.meaning_score}/20</span>
+                <span class="score-item">✍️字形 ${n.stroke_score}/15</span>
+            </div>`;
+            
+            // 卡片只显示姓名+打分+出处
+            card.innerHTML=`<div class="name-header"><span class="name-text">${n.name}</span><span class="score-badge">${n.total_score}</span></div>${sourceHtml}`;
+            // 详情数据存到dataset，点击时弹出
+            card.dataset.detail = detailHtml;
+            card.dataset.name = n.name;
+            list.appendChild(card);
+        });
+        list.scrollIntoView({behavior:'smooth',block:'start'});
+    }).catch(e=>{
+        document.getElementById('btnGen').disabled=false;document.getElementById('btnGen').textContent='📜 开始取名';
+        document.getElementById('loading').classList.remove('active');
+        alert('错误：'+e.message);
+    });
+}
+
+function loadFullPoem(el, title){
+    const div = el.parentElement.querySelector('.full-poem');
+    if(div.style.display !== 'none'){div.style.display='none';return}
+    if(div.innerHTML){div.style.display='block';return}
+    div.innerHTML = '<span style="color:#888">加载中...</span>';
+    div.style.display = 'block';
+    fetch('/poem?title='+encodeURIComponent(title))
+    .then(r=>r.json())
+    .then(d=>{
+        if(d.found){
+            div.innerHTML = '<div style="font-weight:600;color:#a78bfa;margin-bottom:6px">📖 『'+d.title+'』'+d.source+'</div>'+
+                '<div style="color:#e8e8f0;line-height:2">'+d.content+'</div>';
+        }else{
+            div.innerHTML = '<span style="color:#888">未找到全文</span>';
+        }
+    })
+    .catch(()=>{div.innerHTML='<span style="color:#f44">加载失败</span>'});
+}
+
+</script>
+<!-- 详情弹窗 -->
+<div id="nameModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:1000;justify-content:center;align-items:center;animation:fadeIn .2s ease" onclick="if(event.target===this)closeModal()">
+    <div style="background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:16px;max-width:680px;width:90%;max-height:85vh;display:flex;flex-direction:column;position:relative;box-shadow:0 8px 40px rgba(0,0,0,0.4);color:#e8e0d0">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 20px 0 20px;flex-shrink:0">
+            <div id="modalTitle" style="font-size:28px;font-weight:400;letter-spacing:8px;color:#e8e0d0;font-family:'ZCOOL XiaoWei','Ma Shan Zheng',KaiTi,STKaiti,cursive;text-align:center;flex:1"></div>
+            <button onclick="closeModal()" style="background:none;border:none;color:#8888aa;font-size:28px;cursor:pointer;line-height:1;padding:0 8px;border-radius:4px;flex-shrink:0;transition:.2s" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#8888aa'">&times;</button>
+        </div>
+        <div id="modalBody" style="padding:16px 20px 20px 20px;overflow-y:auto;flex:1;min-height:0"></div>
+    </div>
+</div>
+<script>
+function openModal(name,html){
+    document.getElementById('modalTitle').textContent=name;
+    document.getElementById('modalBody').innerHTML=html;
+    document.getElementById('nameModal').style.display='flex';
+    document.body.style.overflow='hidden';
+    // 自动拉取全诗
+    setTimeout(function(){
+        var fpes=document.getElementById('modalBody').querySelectorAll('[id^="fp_"]');
+        fpes.forEach(function(el){
+            if(el.textContent==='加载中...'){
+                var title=el.dataset.title;
+                if(title){
+                    fetch('/poem?title='+encodeURIComponent(title))
+                    .then(function(r){return r.json()}).then(function(d){
+                        el.textContent=d.found?d.content:(el.dataset.snippet||'未找到全文');
+                        var ex=document.getElementById('ex_'+el.id);
+                        if(ex) ex.innerHTML='💡 名字取自「'+title+'」';
+                    });
+                }
+            }
+        });
+    }, 100);
+}
+function closeModal(){document.getElementById('nameModal').style.display='none';document.body.style.overflow=''}
+</script></script>
+</body>
+</html>
