@@ -81,9 +81,13 @@ def api_generate():
         year = int(d.get('year',2024)); month = int(d.get('month',1)); day = int(d.get('day',1))
         gender = d.get('gender','male'); hour = int(d.get('hour',12)) if d.get('hour') else 12
         count = int(d.get('count',20))
+        fixed_char = d.get('fixed_char','').strip()
+        fixed_pos = d.get('fixed_pos','')
         if not surname: return jsonify({'success':False,'error':'请填写姓氏'})
+        if fixed_char and len(fixed_char) != 1:
+            return jsonify({'success':False,'error':'固定字只能填1个汉字'})
         
-        result = generate(surname, year, month, day, gender, hour, count*2)
+        result = generate(surname, year, month, day, gender, hour, count*2, fixed_char, fixed_pos)
         b = result['bazi']
         names = []
         seen = set()

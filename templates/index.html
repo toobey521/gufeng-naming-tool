@@ -80,6 +80,10 @@ body{font-family:'PingFang SC','Microsoft YaHei','Noto Sans SC',sans-serif;backg
             <div class="form-group"><label>日</label><select id="day"></select></div>
         </div>
     </div>
+    <div class="form-row-2">
+        <div class="form-group"><label>固定字（选填）</label><input type="text" id="fixedChar" placeholder="如：云" maxlength="1"></div>
+        <div class="form-group"><label>位置</label><select id="fixedPos"><option value="">不限</option><option value="middle">中间字</option><option value="last">末尾字</option></select></div>
+    </div>
     <button class="btn" id="btnGen" onclick="generate()">📜 开始取名</button>
 </div>
 
@@ -122,7 +126,9 @@ function generate(){
             month:+document.getElementById('month').value,
             day:+document.getElementById('day').value,
             hour:+document.getElementById('hour').value||12,
-            count:+document.getElementById('count').value
+            count:+document.getElementById('count').value,
+            fixed_char:document.getElementById('fixedChar').value.trim(),
+            fixed_pos:document.getElementById('fixedPos').value
         })
     }).then(r=>r.json()).then(res=>{
         document.getElementById('btnGen').disabled=false;document.getElementById('btnGen').textContent='📜 开始取名';

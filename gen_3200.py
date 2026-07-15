@@ -120,7 +120,7 @@ def score(pair, bazi, gender='male'):
         'strokes_total': ts,
     }
 
-def generate(surname, year, month, day, gender, hour=12, count=20):
+def generate(surname, year, month, day, gender, hour=12, count=20, fixed_char='', fixed_pos=''):
     import bazi as _bazi
     bazi = _bazi.calculate_bazi(year, month, day, gender, hour)
     
@@ -131,13 +131,26 @@ def generate(surname, year, month, day, gender, hour=12, count=20):
     random.shuffle(all_chars)
     selected = set(all_chars[:random.randint(600, min(1000, len(all_chars)))])
     
+    # 如有固定字，确保它被选中
+    if fixed_char and fixed_char in CHAR_SET:
+        selected.add(fixed_char)
+    
     results = []
     for pair in NAME_POOL:
-        if pair[0] in selected and pair[1] in selected:
-            r = score(pair, bazi, gender)
-            if r and r['total'] >= 45:
-                r['name'] = surname + pair
-                results.append(r)
+        if not (pair[0] in selected and pair[1] in selected):
+            continue
+        # 固定字过滤
+        if fixed_char:
+            if fixed_pos == 'middle' and pair[0] != fixed_char:
+                continue
+            if fixed_pos == 'last' and pair[1] != fixed_char:
+                continue
+            if fixed_pos == '' and fixed_char not in pair:
+                continue
+        r = score(pair, bazi, gender)
+        if r and r['total'] >= 45:
+            r['name'] = surname + pair
+            results.append(r)
     results.sort(key=lambda x: -x['total'])
     
     final = []
